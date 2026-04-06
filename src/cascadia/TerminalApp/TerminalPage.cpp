@@ -327,7 +327,12 @@ namespace winrt::TerminalApp::implementation
 
         const auto canDragDrop = CanDragDrop();
 
-        _tabView.CanReorderTabs(canDragDrop);
+        // Keep tab reordering available even when elevated.
+        //
+        // Elevated instances cannot participate in the modern UWP drag/drop
+        // pipeline (CanDragDrop == false), but reordering tabs within the same
+        // tab strip should still work.
+        _tabView.CanReorderTabs(true);
         _tabView.CanDragTabs(canDragDrop);
         _tabView.TabDragStarting({ get_weak(), &TerminalPage::_TabDragStarted });
         _tabView.TabDragCompleted({ get_weak(), &TerminalPage::_TabDragCompleted });
