@@ -157,6 +157,7 @@ namespace winrt::TerminalApp::implementation
         _UpdateTabIcon(*newTabImpl);
 
         tabViewItem.PointerPressed({ this, &TerminalPage::_OnTabPointerPressed });
+        tabViewItem.PointerMoved({ this, &TerminalPage::_OnTabPointerMoved });
 
         // When the tab requests close, try to close it (prompt for approval, if required)
         newTabImpl->CloseRequested([weakTab, weakThis{ get_weak() }](auto&& /*s*/, auto&& /*e*/) {
@@ -897,6 +898,14 @@ namespace winrt::TerminalApp::implementation
 
     void TerminalPage::_OnTabPointerPressed(const IInspectable& sender, const Windows::UI::Xaml::Input::PointerRoutedEventArgs& e)
     {
+        if (!CanDragDrop() && e.GetCurrentPoint(nullptr).Properties().IsLeftButtonPressed())
+        {
+            if (const auto tab = _GetTabByTabViewItem(sender))
+            {
+                _elevatedMouseDragTabIndex = _GetTabIndex(tab);
+            }
+        }
+
         if (!_tabItemMiddleClickHookEnabled || !e.GetCurrentPoint(nullptr).Properties().IsMiddleButtonPressed())
         {
             return;
@@ -937,6 +946,45 @@ namespace winrt::TerminalApp::implementation
             e.Handled(true);
         });
         e.Handled(true);
+    }
+
+    void TerminalPage::_OnTabPointerMoved(const IInspectable& sender, const Windows::UI::Xaml::Input::PointerRoutedEventArgs& e)
+    {
+        // In elevated windows, WinUI's built-in drag/reorder pipeline can crash.
+        // Emulate same-window tab reordering by tracking a left-button pointer
+        // drag across tab headers and moving the source tab as we enter
+        // different target tabs.
+        if (CanDragDrop())
+        {
+            return;
+        }
+
+        if (!e.GetCurrentPoint(nullptr).Properties().IsLeftButtonPressed())
+        {
+            _elevatedMouseDragTabIndex.reset();
+            return;
+        }
+
+        if (!_elevatedMouseDragTabIndex.has_value())
+        {
+            return;
+        }
+
+        const auto targetTab = _GetTabByTabViewItem(sender);
+        const auto targetIndex = _GetTabIndex(targetTab);
+        if (!targetIndex.has_value())
+        {
+            return;
+        }
+
+        const auto sourceIndex = _elevatedMouseDragTabIndex.value();
+        if (sourceIndex == targetIndex.value())
+        {
+            return;
+        }
+
+        _TryMoveTab(sourceIndex, gsl::narrow_cast<int32_t>(targetIndex.value()));
+        _elevatedMouseDragTabIndex = targetIndex.value();
     }
 
     safe_void_coroutine TerminalPage::_OnTabPointerReleasedCloseTab(IInspectable sender)

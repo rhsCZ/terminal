@@ -451,7 +451,9 @@ namespace winrt::TerminalApp::implementation
         PointerEntered_revoker _tabItemMiddleClickPointerEntered;
         PointerExited_revoker _tabItemMiddleClickPointerExited;
         PointerCaptureLost_revoker _tabItemMiddleClickPointerCaptureLost;
+        std::optional<uint32_t> _elevatedMouseDragTabIndex;
         void _OnTabPointerPressed(const IInspectable& sender, const Windows::UI::Xaml::Input::PointerRoutedEventArgs& eventArgs);
+        void _OnTabPointerMoved(const IInspectable& sender, const Windows::UI::Xaml::Input::PointerRoutedEventArgs& eventArgs);
         safe_void_coroutine _OnTabPointerReleasedCloseTab(IInspectable sender);
 
         void _OnTabSelectionChanged(const IInspectable& sender, const Windows::UI::Xaml::Controls::SelectionChangedEventArgs& eventArgs);

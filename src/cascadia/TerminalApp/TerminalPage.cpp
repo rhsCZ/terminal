@@ -325,13 +325,14 @@ namespace winrt::TerminalApp::implementation
         _tabView = _tabRow.TabView();
         _rearranging = false;
 
-        // Keep tab reordering available even when elevated.
-        //
-        // WinUI tab reordering relies on tab dragging being enabled. We still
-        // gate cross-window drag/drop in the handlers below when
-        // CanDragDrop()==false.
-        _tabView.CanReorderTabs(true);
-        _tabView.CanDragTabs(true);
+        const auto canDragDrop = CanDragDrop();
+
+        // IMPORTANT: Elevated windows cannot reliably use WinUI's drag/reorder
+        // pipeline (Windows.UI.Xaml internal exception 0xC000027B), so we keep
+        // this tied to CanDragDrop(). Elevated mouse-based reordering is
+        // provided by a custom pointer-move fallback in TabManagement.cpp.
+        _tabView.CanReorderTabs(canDragDrop);
+        _tabView.CanDragTabs(canDragDrop);
         _tabView.TabDragStarting({ get_weak(), &TerminalPage::_TabDragStarted });
         _tabView.TabDragCompleted({ get_weak(), &TerminalPage::_TabDragCompleted });
 
