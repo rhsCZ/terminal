@@ -325,10 +325,13 @@ namespace winrt::TerminalApp::implementation
         _tabView = _tabRow.TabView();
         _rearranging = false;
 
-        const auto canDragDrop = CanDragDrop();
-
-        _tabView.CanReorderTabs(canDragDrop);
-        _tabView.CanDragTabs(canDragDrop);
+        // Keep tab reordering available even when elevated.
+        //
+        // WinUI tab reordering relies on tab dragging being enabled. We still
+        // gate cross-window drag/drop in the handlers below when
+        // CanDragDrop()==false.
+        _tabView.CanReorderTabs(true);
+        _tabView.CanDragTabs(true);
         _tabView.TabDragStarting({ get_weak(), &TerminalPage::_TabDragStarted });
         _tabView.TabDragCompleted({ get_weak(), &TerminalPage::_TabDragCompleted });
 
@@ -5545,6 +5548,13 @@ namespace winrt::TerminalApp::implementation
     void TerminalPage::_onTabDragStarting(const winrt::Microsoft::UI::Xaml::Controls::TabView&,
                                           const winrt::Microsoft::UI::Xaml::Controls::TabViewTabDragStartingEventArgs& e)
     {
+        if (!CanDragDrop())
+        {
+            // Elevated windows can still reorder tabs, but they cannot use the
+            // UWP drag/drop pipeline that powers cross-window tab moves.
+            return;
+        }
+
         // Get the tab impl from this event.
         const auto eventTab = e.Tab();
         const auto tabBase = _GetTabByTabViewItem(eventTab);
@@ -5591,6 +5601,11 @@ namespace winrt::TerminalApp::implementation
     void TerminalPage::_onTabStripDragOver(const winrt::Windows::Foundation::IInspectable& /*sender*/,
                                            const winrt::Windows::UI::Xaml::DragEventArgs& e)
     {
+        if (!CanDragDrop())
+        {
+            return;
+        }
+
         // We must mark that we can accept the drag/drop. The system will never
         // call TabStripDrop on us if we don't indicate that we're willing.
         const auto& props{ e.DataView().Properties() };
@@ -5614,6 +5629,11 @@ namespace winrt::TerminalApp::implementation
     void TerminalPage::_onTabStripDrop(winrt::Windows::Foundation::IInspectable /*sender*/,
                                        winrt::Windows::UI::Xaml::DragEventArgs e)
     {
+        if (!CanDragDrop())
+        {
+            return;
+        }
+
         // Get the PID and make sure it is the same as ours.
         if (const auto& pidObj{ e.DataView().Properties().TryLookup(L"pid") })
         {
@@ -5695,6 +5715,11 @@ namespace winrt::TerminalApp::implementation
     void TerminalPage::_onTabDroppedOutside(winrt::IInspectable /*sender*/,
                                             winrt::MUX::Controls::TabViewTabDroppedOutsideEventArgs /*e*/)
     {
+        if (!CanDragDrop())
+        {
+            return;
+        }
+
         // Get the current pointer point from the CoreWindow
         const auto& pointerPoint{ CoreWindow::GetForCurrentThread().PointerPosition() };
 
