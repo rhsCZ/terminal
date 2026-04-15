@@ -105,9 +105,10 @@ namespace SettingsModelUnitTests
         TEST_METHOD(RealResolverUrlCases);
         TEST_METHOD(RealResolverUNCCases);
 
-        static constexpr std::wstring_view pingCommandline{ LR"(C:\Windows\System32\PING.EXE)" }; // Normalized by Profile (this is the casing that Windows stores on disk)
-        static constexpr std::wstring_view overrideCommandline{ LR"(C:\Windows\System32\cscript.exe)" };
-        static constexpr std::wstring_view cmdCommandline{ LR"(C:\Windows\System32\cmd.exe)" }; // The default commandline for a profile
+        // These are normalized by NormalizeCommandLine, which resolves to the on-disk casing.
+        // They must be computed at runtime because the casing varies between machines.
+        static inline const std::wstring overrideCommandline{ implementation::Profile::NormalizeCommandLine(LR"(C:\Windows\System32\cscript.exe)") };
+        static inline const std::wstring cmdCommandline{ implementation::Profile::NormalizeCommandLine(LR"(C:\Windows\System32\cmd.exe)") }; // The default commandline for a profile
         static constexpr std::wstring_view fragmentBasePath1{ LR"(C:\Windows\Media)" };
 
     private:
