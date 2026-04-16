@@ -98,12 +98,12 @@ extends:
         dependsOn: []
         jobs:
           - template: ./build/pipelines/templates-v2/job-build-project.yml@self
-            templateContext:
-              outputs:
-                - output: pipelineArtifact
-                  targetPath: $(JobOutputDirectory)
-                  artifactName: $(JobOutputArtifactName)
             parameters:
+              templateContext:
+                outputs:
+                  - output: pipelineArtifact
+                    targetPath: $(JobOutputDirectory)
+                    artifactName: $(JobOutputArtifactName)
               publishArtifacts: false # Handled by 1ESPT
               branding: ${{ parameters.branding }}
               buildTerminal: ${{ parameters.buildTerminal }}
@@ -129,12 +129,12 @@ extends:
           - ${{ if eq(parameters.buildWPF, true) }}:
             # Add an Any CPU build flavor for the WPF control bits
             - template: ./build/pipelines/templates-v2/job-build-project.yml@self
-              templateContext:
-                outputs:
-                  - output: pipelineArtifact
-                    targetPath: $(JobOutputDirectory)
-                    artifactName: $(JobOutputArtifactName)
               parameters:
+                templateContext:
+                  outputs:
+                    - output: pipelineArtifact
+                      targetPath: $(JobOutputDirectory)
+                      artifactName: $(JobOutputArtifactName)
                 publishArtifacts: false # Handled by 1ESPT
                 jobName: BuildWPF
                 branding: ${{ parameters.branding }}
@@ -157,12 +157,12 @@ extends:
         jobs:
           - ${{ if eq(parameters.buildTerminal, true) }}:
             - template: ./build/pipelines/templates-v2/job-merge-msix-into-bundle.yml@self
-              templateContext:
-                outputs:
-                  - output: pipelineArtifact
-                    targetPath: $(JobOutputDirectory)
-                    artifactName: $(JobOutputArtifactName)
               parameters:
+                templateContext:
+                  outputs:
+                    - output: pipelineArtifact
+                      targetPath: $(JobOutputDirectory)
+                      artifactName: $(JobOutputArtifactName)
                 publishArtifacts: false # Handled by 1ESPT
                 jobName: Bundle
                 branding: ${{ parameters.branding }}
@@ -174,12 +174,12 @@ extends:
 
           - ${{ if eq(parameters.buildConPTY, true) }}:
             - template: ./build/pipelines/templates-v2/job-package-conpty.yml@self
-              templateContext:
-                outputs:
-                  - output: pipelineArtifact
-                    targetPath: $(JobOutputDirectory)
-                    artifactName: $(JobOutputArtifactName)
               parameters:
+                templateContext:
+                  outputs:
+                    - output: pipelineArtifact
+                      targetPath: $(JobOutputDirectory)
+                      artifactName: $(JobOutputArtifactName)
                 publishArtifacts: false # Handled by 1ESPT
                 buildConfigurations: ${{ parameters.buildConfigurations }}
                 buildPlatforms: ${{ parameters.buildPlatforms }}
@@ -189,12 +189,12 @@ extends:
 
           - ${{ if eq(parameters.buildWPF, true) }}:
             - template: ./build/pipelines/templates-v2/job-build-package-wpf.yml@self
-              templateContext:
-                outputs:
-                  - output: pipelineArtifact
-                    targetPath: $(JobOutputDirectory)
-                    artifactName: $(JobOutputArtifactName)
               parameters:
+                templateContext:
+                  outputs:
+                    - output: pipelineArtifact
+                      targetPath: $(JobOutputDirectory)
+                      artifactName: $(JobOutputArtifactName)
                 publishArtifacts: false # Handled by 1ESPT
                 buildConfigurations: ${{ parameters.buildConfigurations }}
                 buildPlatforms: ${{ parameters.buildPlatforms }}
@@ -208,11 +208,6 @@ extends:
         jobs:
           - template: ./build/pipelines/templates-v2/job-publish-symbols-using-symbolrequestprod-api.yml@self
             parameters:
-              templateContext:
-                outputs:
-                  - output: pipelineArtifact
-                    targetPath: $(Build.ArtifactStagingDirectory)
-                    artifactName: publish-symbols-job
               includePublicSymbolServer: ${{ parameters.publishSymbolsToPublic }}
               symbolExpiryTime: ${{ parameters.symbolExpiryTime }}
               subscription: ${{ parameters.symbolPublishingSubscription }}
