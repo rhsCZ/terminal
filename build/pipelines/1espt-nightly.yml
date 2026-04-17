@@ -12,10 +12,11 @@ parameters:
   - name: publishToAzure
     displayName: "Deploy to **PUBLIC** Azure Storage"
     type: boolean
-    default: false
+    default: true
   - name: official
+    displayName: "Run on Official 1ES Pipeline Templates"
     type: boolean
-    default: false
+    default: true
 
 name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 
