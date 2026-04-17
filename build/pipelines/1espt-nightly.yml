@@ -42,7 +42,7 @@ extends:
       useManagedIdentity: $(SigningUseManagedIdentity)
       clientId: $(SigningOriginalClientId)
     publishSymbolsToPublic: true
-    symbolExpiryTime: 1
+    symbolExpiryTime: 15
     symbolPublishingSubscription: $(SymbolPublishingServiceConnection)
     symbolPublishingProject: $(SymbolPublishingProject)
     ${{ if eq(true, parameters.publishToAzure) }}:
