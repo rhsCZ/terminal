@@ -99,7 +99,7 @@ extends:
         jobs:
           - template: ./build/pipelines/templates-v2/job-build-project.yml@self
             parameters:
-              templateContext:
+              outerTemplateContext:
                 outputs:
                   - output: pipelineArtifact
                     targetPath: $(JobOutputDirectory)
@@ -116,8 +116,10 @@ extends:
               removeAllNonSignedFiles: true # appease the overlords
               codeSign: ${{ parameters.codeSign }}
               signingIdentity: ${{ parameters.signingIdentity }}
-              beforeBuildSteps: # Right before we build, lay down the universal package and localizations
+              beforeBuildSteps:
                 - template: ./build/pipelines/templates-v2/steps-setup-versioning.yml@self
+
+                - template: ./build/pipelines/templates-v2/steps-install-terrapin.yml@self
 
                 - task: UniversalPackages@0
                   displayName: Download terminal-internal Universal Package
@@ -126,17 +128,11 @@ extends:
                     packageListDownload: e82d490c-af86-4733-9dc4-07b772033204
                     versionListDownload: ${{ parameters.terminalInternalPackageVersion }}
 
-                - pwsh: |-
-                    nuget install -source "https://pkgs.dev.azure.com/microsoft/_packaging/WindowsTerminal/nuget/v3/index.json" TerrapinRetrievalTool -Prerelease -OutputDirectory _trt
-                    $TerrapinRetrievalToolPath = (Get-Item _trt\TerrapinRetrievalTool.*\win-x64\TerrapinRetrievalTool.exe).FullName
-                    Write-Host "##vso[task.setvariable variable=X_VCPKG_ASSET_SOURCES]x-script,${TerrapinRetrievalToolPath} -b https://vcpkg.storage.devpackages.microsoft.io/artifacts/ -a true -u None -p {url} -s {sha512} -d {dst};x-block-origin"
-                  displayName: Set up the Terrapin Retrieval Tool (vcpkg cache)
-
           - ${{ if eq(parameters.buildWPF, true) }}:
             # Add an Any CPU build flavor for the WPF control bits
             - template: ./build/pipelines/templates-v2/job-build-project.yml@self
               parameters:
-                templateContext:
+                outerTemplateContext:
                   outputs:
                     - output: pipelineArtifact
                       targetPath: $(JobOutputDirectory)
@@ -164,7 +160,7 @@ extends:
           - ${{ if eq(parameters.buildTerminal, true) }}:
             - template: ./build/pipelines/templates-v2/job-merge-msix-into-bundle.yml@self
               parameters:
-                templateContext:
+                outerTemplateContext:
                   outputs:
                     - output: pipelineArtifact
                       targetPath: $(JobOutputDirectory)
@@ -181,7 +177,7 @@ extends:
           - ${{ if eq(parameters.buildConPTY, true) }}:
             - template: ./build/pipelines/templates-v2/job-package-conpty.yml@self
               parameters:
-                templateContext:
+                outerTemplateContext:
                   outputs:
                     - output: pipelineArtifact
                       targetPath: $(JobOutputDirectory)
@@ -196,7 +192,7 @@ extends:
           - ${{ if eq(parameters.buildWPF, true) }}:
             - template: ./build/pipelines/templates-v2/job-build-package-wpf.yml@self
               parameters:
-                templateContext:
+                outerTemplateContext:
                   outputs:
                     - output: pipelineArtifact
                       targetPath: $(JobOutputDirectory)
