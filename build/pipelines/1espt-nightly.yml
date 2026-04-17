@@ -28,7 +28,7 @@ variables:
 extends:
   template: templates-v2/pipeline-1espt-full-release-build.yml
   parameters:
-    official: ${{parameters.official}}
+    official: ${{ parameters.official }}
     branding: Canary
     buildTerminal: true
     pgoBuildMode: Optimize
