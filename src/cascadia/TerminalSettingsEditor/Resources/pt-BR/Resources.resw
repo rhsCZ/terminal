@@ -983,15 +983,15 @@
     <comment>{Locked="‗"} An option to choose from for the "cursor shape" setting. When selected, the cursor will look like a stacked set of two underscores. The character in the parentheses is used to show what it looks like.</comment>
   </data>
   <data name="Profile_FontFace.Header" xml:space="preserve">
-    <value>Tipo de fonte</value>
+    <value>Variação</value>
     <comment>Header for a control to select the font for text in the app.</comment>
   </data>
   <data name="Profile_FontFaceBox.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>Tipo de fonte</value>
+    <value>Variação</value>
     <comment>Name for a control to select the font for text in the app.</comment>
   </data>
   <data name="Profile_FontFace.HelpText" xml:space="preserve">
-    <value>Pode utilizar vários tipos de letra separando-os com uma vírgula ASCII.</value>
+    <value>Você pode usar várias fontes, separando-as com uma vírgula ASCII.</value>
   </data>
   <data name="Profile_FontSize.Header" xml:space="preserve">
     <value>Tamanho da fonte</value>
@@ -1742,7 +1742,7 @@
     <comment>A supplementary setting to the "font face" setting. Toggling this control updates the font face control to show all of the fonts installed.</comment>
   </data>
   <data name="Profile_FontFaceShowAllFonts.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Se habilitado, mostrar todas as fontes instaladas na lista acima. Caso contrário, mostrar apenas a lista de fontes com espaçamento mono.</value>
+    <value>Se ativado, mostra todas as fontes instaladas na lista acima. Caso contrário, mostra apenas as fontes monoespaçadas.</value>
     <comment>A description for what the supplementary "show all fonts" setting does. Presented near "Profile_FontFaceShowAllFonts".</comment>
   </data>
   <data name="Profile_CreateUnfocusedAppearanceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
