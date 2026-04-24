@@ -1742,7 +1742,7 @@
     <comment>A supplementary setting to the "font face" setting. Toggling this control updates the font face control to show all of the fonts installed.</comment>
   </data>
   <data name="Profile_FontFaceShowAllFonts.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
-    <value>Wenn diese Option aktiviert ist, werden alle installierten Schriftarten in der Liste oben angezeigt. Andernfalls wird nur die Liste der Festbreitenschriftarten angezeigt.</value>
+    <value>Wenn diese Option aktiviert ist, werden alle installierten Schriftarten in der Liste oben angezeigt. Andernfalls wird nur die Liste der Schriftarten mit fester Breite angezeigt.</value>
     <comment>A description for what the supplementary "show all fonts" setting does. Presented near "Profile_FontFaceShowAllFonts".</comment>
   </data>
   <data name="Profile_CreateUnfocusedAppearanceButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
