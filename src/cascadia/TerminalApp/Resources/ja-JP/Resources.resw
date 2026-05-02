@@ -746,6 +746,14 @@
     <value>Windows</value>
     <comment>This is displayed as a label for the context menu item that holds the submenu of available windows.</comment>
   </data>
+  <data name="NotificationMessage_TabActivity" xml:space="preserve">
+    <value>タブ "{0}" のアクティビティ</value>
+    <comment>{0} is the tab title. Shown as the body of a desktop notification when tab activity is detected.</comment>
+  </data>
+  <data name="NotificationMessage_TabActivityInWindow" xml:space="preserve">
+    <value>タブ "{0}" のアクティビティ (ウィンドウ "{1}")</value>
+    <comment>{0} is the tab title, {1} is the window name. Shown as the body of a desktop notification when tab activity is detected and the window has a name.</comment>
+  </data>
   <data name="DropPathTabRun.Text" xml:space="preserve">
     <value>指定された開始ディレクトリで新しいタブを開きます</value>
   </data>
@@ -882,10 +890,10 @@
     <value>設定されている場合、コマンドはプロファイルの既定のコマンドを置き換えるのではなく、追加されます。</value>
   </data>
   <data name="RestartConnectionText" xml:space="preserve">
-    <value>接続の再起動</value>
+    <value>セッションの再開</value>
   </data>
   <data name="RestartConnectionToolTip" xml:space="preserve">
-    <value>アクティブ ペイン接続を再起動します</value>
+    <value>アクティブなウィンドウでセッションを再起動します</value>
   </data>
   <data name="SnippetPaneTitle.Text" xml:space="preserve">
     <value>抜粋</value>
