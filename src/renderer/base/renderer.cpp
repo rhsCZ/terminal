@@ -789,22 +789,8 @@ bool Renderer::_CheckViewportAndScroll()
 void Renderer::_scheduleRenditionBlink()
 {
     const auto& buffer = _pData->GetTextBuffer();
-    bool blinkUsed = false;
+    const auto blinkUsed = buffer.ContainsBlinkAttributeInRegion(_viewport);
 
-    for (auto row = _viewport.Top(); row < _viewport.BottomExclusive(); ++row)
-    {
-        const auto& r = buffer.GetRowByOffset(row);
-        for (const auto& attr : r.Attributes())
-        {
-            if (attr.IsBlinking())
-            {
-                blinkUsed = true;
-                goto why_does_cpp_not_have_labeled_loops;
-            }
-        }
-    }
-
-why_does_cpp_not_have_labeled_loops:
     if (blinkUsed != IsTimerRunning(_renditionBlinker))
     {
         if (blinkUsed)
@@ -1127,18 +1113,11 @@ void Renderer::_PaintBufferOutput(_In_ IRenderEngine* const pEngine)
             // Retrieve the cell information iterator limited to just this line we want to redraw.
             auto it = buffer.GetCellDataAt(bufferLine.Origin(), bufferLine);
 
-            // Calculate if two things are true:
-            // 1. this row wrapped
-            // 2. We're painting the last col of the row.
-            // In that case, set lineWrapped=true for the _PaintBufferOutputHelper call.
-            const auto lineWrapped = (buffer.GetRowByOffset(bufferLine.Origin().y).WasWrapForced()) &&
-                                     (bufferLine.RightExclusive() == buffer.GetSize().Width());
-
             // Prepare the appropriate line transform for the current row and viewport offset.
             LOG_IF_FAILED(pEngine->PrepareLineTransform(lineRendition, screenPosition.y, _viewport.Left()));
 
             // Ask the helper to paint through this specific line.
-            _PaintBufferOutputHelper(pEngine, it, screenPosition, lineWrapped);
+            _PaintBufferOutputHelper(pEngine, it, screenPosition);
 
             // Paint any image content on top of the text.
             const auto imageSlice = buffer.GetRowByOffset(row).GetImageSlice();
@@ -1158,8 +1137,7 @@ static bool _IsAllSpaces(const std::wstring_view v)
 
 void Renderer::_PaintBufferOutputHelper(_In_ IRenderEngine* const pEngine,
                                         TextBufferCellIterator it,
-                                        const til::point target,
-                                        const bool lineWrapped)
+                                        const til::point target)
 {
     auto globalInvert{ _renderSettings.GetRenderMode(RenderSettings::Mode::ScreenReversed) };
 
@@ -1269,7 +1247,7 @@ void Renderer::_PaintBufferOutputHelper(_In_ IRenderEngine* const pEngine,
             } while (it);
 
             // Do the painting.
-            THROW_IF_FAILED(pEngine->PaintBufferLine({ _clusterBuffer.data(), _clusterBuffer.size() }, screenPoint, trimLeft, lineWrapped));
+            THROW_IF_FAILED(pEngine->PaintBufferLine({ _clusterBuffer.data(), _clusterBuffer.size() }, screenPoint, trimLeft));
 
             // If we're allowed to do grid drawing, draw that now too (since it will be coupled with the color data)
             // We're only allowed to draw the grid lines under certain circumstances.
@@ -1538,7 +1516,7 @@ void Renderer::_updateCursorInfo()
     _currentCursorOptions.lineRendition = lineRendition;
     _currentCursorOptions.ulCursorHeightPercent = cursorHeight;
     _currentCursorOptions.cursorPixelWidth = _pData->GetCursorPixelWidth();
-    _currentCursorOptions.fIsDoubleWidth = buffer.GetRowByOffset(cursorPosition.y).DbcsAttrAt(cursorPosition.x) != DbcsAttribute::Single;
+    _currentCursorOptions.fIsDoubleWidth = buffer.IsGlyphDoubleWidthAt(cursorPosition);
     _currentCursorOptions.cursorType = cursor.GetType();
     _currentCursorOptions.fUseColor = useColor;
     _currentCursorOptions.cursorColor = cursorColor;

@@ -256,7 +256,6 @@ conterm
 contsf
 contypes
 conwinuserrefs
-coordnew
 COPYCOLOR
 COPYDATA
 COPYDATASTRUCT
@@ -573,6 +572,7 @@ FGHIJ
 fgidx
 FGs
 FILEDESCRIPTION
+filehops
 FILESUBTYPE
 FILESYSPATH
 FILEW
@@ -622,7 +622,6 @@ fuzzmap
 fuzzwrapper
 fwdecl
 fwe
-fwlink
 fzf
 gci
 gcx
@@ -866,6 +865,7 @@ KILLACTIVE
 KILLFOCUS
 kinda
 KIYEOK
+KKP
 KLF
 KLMNO
 KOK
@@ -885,6 +885,7 @@ LBUTTONDOWN
 LBUTTONUP
 lcb
 lci
+LCMAP
 LCONTROL
 LCTRL
 lcx
@@ -1772,6 +1773,7 @@ uldash
 uldb
 ULONGLONG
 ulwave
+Unaccess
 Unadvise
 unattend
 UNCPRIORITY

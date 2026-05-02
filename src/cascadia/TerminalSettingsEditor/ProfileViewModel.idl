@@ -14,12 +14,6 @@ import "ColorSchemesPageViewModel.idl";
 
 namespace Microsoft.Terminal.Settings.Editor
 {
-    runtimeclass NavigateToProfileArgs
-    {
-        ProfileViewModel Profile { get; };
-        IHostedInWindow WindowRoot { get; };
-    }
-
     runtimeclass DeleteProfileEventArgs
     {
         Guid ProfileGuid { get; };
@@ -140,10 +134,12 @@ namespace Microsoft.Terminal.Settings.Editor
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, AutoMarkPrompts);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, RepositionCursorWithMouse);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, ForceVTInput);
+        OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, AllowKittyKeyboardMode);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, AllowVtChecksumReport);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(String, AnswerbackMessage);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, RainbowSuggestions);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Microsoft.Terminal.Control.PathTranslationStyle, PathTranslationStyle);
+        OBSERVABLE_PROJECTED_PROFILE_SETTING(String, DragDropDelimiter);
         OBSERVABLE_PROJECTED_PROFILE_SETTING(Boolean, AllowVtClipboardWrite);
     }
 }

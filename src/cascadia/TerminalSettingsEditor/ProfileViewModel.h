@@ -4,7 +4,6 @@
 #pragma once
 
 #include "DeleteProfileEventArgs.g.h"
-#include "NavigateToProfileArgs.g.h"
 #include "BellSoundViewModel.g.h"
 #include "ProfileViewModel.g.h"
 #include "Utils.h"
@@ -12,21 +11,6 @@
 
 namespace winrt::Microsoft::Terminal::Settings::Editor::implementation
 {
-    struct NavigateToProfileArgs : NavigateToProfileArgsT<NavigateToProfileArgs>
-    {
-    public:
-        NavigateToProfileArgs(ProfileViewModel profile, Editor::IHostedInWindow windowRoot) :
-            _Profile(profile),
-            _WeakWindowRoot(windowRoot) {}
-
-        Editor::IHostedInWindow WindowRoot() const noexcept { return _WeakWindowRoot ? _WeakWindowRoot.get() : nullptr; }
-        Editor::ProfileViewModel Profile() const noexcept { return _Profile; }
-
-    private:
-        winrt::weak_ref<Editor::IHostedInWindow> _WeakWindowRoot;
-        Editor::ProfileViewModel _Profile{ nullptr };
-    };
-
     struct BellSoundViewModel : BellSoundViewModelT<BellSoundViewModel>, ViewModelHelper<BellSoundViewModel>
     {
     public:
@@ -155,11 +139,13 @@ namespace winrt::Microsoft::Terminal::Settings::Editor::implementation
         OBSERVABLE_PROJECTED_SETTING(_profile, AutoMarkPrompts);
         OBSERVABLE_PROJECTED_SETTING(_profile, RepositionCursorWithMouse);
         OBSERVABLE_PROJECTED_SETTING(_profile, ForceVTInput);
+        OBSERVABLE_PROJECTED_SETTING(_profile, AllowKittyKeyboardMode);
         OBSERVABLE_PROJECTED_SETTING(_profile, AllowVtChecksumReport);
         OBSERVABLE_PROJECTED_SETTING(_profile, AllowVtClipboardWrite);
         OBSERVABLE_PROJECTED_SETTING(_profile, AnswerbackMessage);
         OBSERVABLE_PROJECTED_SETTING(_profile, RainbowSuggestions);
         OBSERVABLE_PROJECTED_SETTING(_profile, PathTranslationStyle);
+        OBSERVABLE_PROJECTED_SETTING(_profile, DragDropDelimiter);
 
         WINRT_PROPERTY(bool, IsBaseLayer, false);
         WINRT_PROPERTY(bool, FocusDeleteButton, false);

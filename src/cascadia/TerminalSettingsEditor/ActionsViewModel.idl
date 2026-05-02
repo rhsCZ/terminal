@@ -35,12 +35,6 @@ namespace Microsoft.Terminal.Settings.Editor
         CommandViewModel ViewModel { get; };
     }
 
-    runtimeclass NavigateToCommandArgs
-    {
-        CommandViewModel Command { get; };
-        IHostedInWindow WindowRoot { get; };
-    }
-
     runtimeclass ModifyKeyChordEventArgs
     {
         Microsoft.Terminal.Control.KeyChord OldKeys { get; };
@@ -61,6 +55,8 @@ namespace Microsoft.Terminal.Settings.Editor
         // View-model specific
         String DisplayName { get; };
         String FirstKeyChordText { get; };
+        String AdditionalKeyChordCountText { get; };
+        String AdditionalKeyChordTooltipText { get; };
         String DisplayNameAndKeyChordAutomationPropName { get; };
 
         // UI side (command list page)
@@ -170,6 +166,7 @@ namespace Microsoft.Terminal.Settings.Editor
         void UpdateSettings(Microsoft.Terminal.Settings.Model.CascadiaSettings settings);
 
         void AddNewCommand();
+        void ReSortCommandList();
 
         ActionsSubPage CurrentPage;
         Boolean DisplayBadge { get; };
