@@ -2,16 +2,23 @@
 // Licensed under the MIT license.
 
 #include "pch.h"
-#include "ControlSizeTrigger.h"
+#include "SettingsControlsHelpers.h"
 #include "ControlSizeTrigger.g.cpp"
+#include "TopCornerRadiusFilterConverter.g.cpp"
+#include "BottomCornerRadiusFilterConverter.g.cpp"
+#include "StringDefaultTemplateSelector.g.cpp"
+#include "StyleExtensions.g.cpp"
 
 #include <limits>
 
 using namespace winrt::Windows::Foundation;
+using namespace winrt::Windows::Foundation::Collections;
 using namespace winrt::Windows::UI::Xaml;
 
 namespace winrt::Microsoft::Terminal::Settings::Editor::implementation
 {
+#pragma region ControlSizeTrigger
+
     DependencyProperty ControlSizeTrigger::_CanTriggerProperty{ nullptr };
     DependencyProperty ControlSizeTrigger::_MinWidthProperty{ nullptr };
     DependencyProperty ControlSizeTrigger::_MaxWidthProperty{ nullptr };
@@ -136,4 +143,124 @@ namespace winrt::Microsoft::Terminal::Settings::Editor::implementation
         _isActive = activate;
         SetActive(activate);
     }
+
+#pragma endregion
+#pragma region TopBottomCornerRadiusFilters
+
+    winrt::Windows::Foundation::IInspectable TopCornerRadiusFilterConverter::Convert(const winrt::Windows::Foundation::IInspectable& value, const Interop::TypeName& /*targetType*/, const winrt::Windows::Foundation::IInspectable& /*parameter*/, const hstring& /*language*/)
+    {
+        if (!value)
+        {
+            return value;
+        }
+        const auto cr = unbox_value_or<CornerRadius>(value, CornerRadius{ 0, 0, 0, 0 });
+        return box_value(CornerRadius{ cr.TopLeft, cr.TopRight, 0, 0 });
+    }
+
+    winrt::Windows::Foundation::IInspectable TopCornerRadiusFilterConverter::ConvertBack(const winrt::Windows::Foundation::IInspectable& value, const Interop::TypeName& /*targetType*/, const winrt::Windows::Foundation::IInspectable& /*parameter*/, const hstring& /*language*/)
+    {
+        return value;
+    }
+
+    winrt::Windows::Foundation::IInspectable BottomCornerRadiusFilterConverter::Convert(const winrt::Windows::Foundation::IInspectable& value, const Interop::TypeName& /*targetType*/, const winrt::Windows::Foundation::IInspectable& /*parameter*/, const hstring& /*language*/)
+    {
+        if (!value)
+        {
+            return value;
+        }
+        const auto cr = unbox_value_or<CornerRadius>(value, CornerRadius{ 0, 0, 0, 0 });
+        return box_value(CornerRadius{ 0, 0, cr.BottomRight, cr.BottomLeft });
+    }
+
+    winrt::Windows::Foundation::IInspectable BottomCornerRadiusFilterConverter::ConvertBack(const winrt::Windows::Foundation::IInspectable& value, const Interop::TypeName& /*targetType*/, const winrt::Windows::Foundation::IInspectable& /*parameter*/, const hstring& /*language*/)
+    {
+        return value;
+    }
+
+#pragma endregion
+#pragma region StringDefaultTemplateSelector
+
+    DataTemplate StringDefaultTemplateSelector::SelectTemplateCore(const IInspectable& item, const DependencyObject& /*container*/)
+    {
+        return SelectTemplateCore(item);
+    }
+
+    DataTemplate StringDefaultTemplateSelector::SelectTemplateCore(const IInspectable& item)
+    {
+        if (const auto pv{ item.try_as<IPropertyValue>() }; pv && pv.Type() == PropertyType::String)
+        {
+            return _StringTemplate;
+        }
+        return nullptr;
+    }
+
+#pragma endregion
+#pragma region StyleExtensions
+
+    ResourceDictionary StyleExtensions::_sharedImplicitStylesDictionary{ nullptr };
+
+    // Lazy singleton: loads SettingsControlsImplicitStyles.xaml once for the process
+    // lifetime. See that file's header for why we copy entries instead of appending
+    // the dictionary to MergedDictionaries.
+    ResourceDictionary StyleExtensions::_SharedImplicitStylesDictionary()
+    {
+        if (!_sharedImplicitStylesDictionary)
+        {
+            try
+            {
+                auto dict{ ResourceDictionary{} };
+                dict.Source(winrt::Windows::Foundation::Uri{ L"ms-appx:///Microsoft.Terminal.Settings.Editor/SettingsControlsImplicitStyles.xaml" });
+                _sharedImplicitStylesDictionary = dict;
+            }
+            CATCH_LOG();
+        }
+        return _sharedImplicitStylesDictionary;
+    }
+
+    void StyleExtensions::EnsureImplicitStylesMergedInto(const FrameworkElement& target)
+    {
+        if (!target)
+        {
+            return;
+        }
+
+        try
+        {
+            const auto resources{ target.Resources() };
+            if (!resources)
+            {
+                return;
+            }
+
+            // Idempotency marker: if we've already populated this element's
+            // Resources with the implicit styles, skip. Cheap to check
+            // (one hash lookup), independent of MergedDictionaries.
+            const auto markerKey{ box_value(hstring{ L"__SettingsControls_ImplicitStyles" }) };
+            if (resources.HasKey(markerKey))
+            {
+                return;
+            }
+
+            const auto sharedDict{ _SharedImplicitStylesDictionary() };
+            if (!sharedDict)
+            {
+                return;
+            }
+
+            // Copy each entry into the target's Resources. Styles are reference types
+            // that can be shared across elements (unlike the dictionary itself, which
+            // can't be appended to more than one MergedDictionaries. See the XAML header).
+            for (const auto& kv : sharedDict)
+            {
+                if (!resources.HasKey(kv.Key()))
+                {
+                    resources.Insert(kv.Key(), kv.Value());
+                }
+            }
+            resources.Insert(markerKey, box_value(true));
+        }
+        CATCH_LOG();
+    }
+
+#pragma endregion
 }
