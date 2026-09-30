@@ -71,6 +71,10 @@ jobs:
         -Root "$(Terminal.BinDir)"
         -AdditionalTaefArguments '/select:(@IsPGO=true)','/p:WTTestContent=$(TerminalTestContentPath)'
 
+  - publish: '$(Terminal.BinDir)/Recordings'
+    artifact: screen-recordings-$(BuildPlatform)-$(BuildConfiguration)${{ parameters.artifactStem }}
+    condition: always()
+
   - task: CopyFiles@2
     displayName: 'Copy PGO outputs to Artifacts'
     condition: always()

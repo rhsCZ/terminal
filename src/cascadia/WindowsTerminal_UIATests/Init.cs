@@ -5,6 +5,7 @@
 // </copyright>
 //----------------------------------------------------------------------------------------------------------------------
 
+using Microsoft.PowerToys.UITest;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -17,10 +18,13 @@ namespace Host.Tests.UIA
     class Init
     {
         static Process appDriver;
+        static ScreenRecording sr;
 
         [AssemblyInitialize]
         public static void SetupAll(TestContext context)
         {
+            sr = new ScreenRecording(Path.Combine(context.TestDeploymentDir, "Recordings"));
+            _ = sr.StartRecordingAsync();
             Log.Comment("Searching for WinAppDriver in the same directory where this test was launched from...");
             string winAppDriver = Path.Combine(context.TestDeploymentDir, "WinAppDriver", "WinAppDriver.exe");
 
@@ -40,6 +44,14 @@ namespace Host.Tests.UIA
         {
             try
             {
+                    try
+                    {
+                        sr.StopRecordingAsync().GetAwaiter().GetResult();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to stop screen recording: {ex.Message}");
+                    }
                 appDriver.Kill();
             }
             catch

@@ -6,7 +6,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WindowsTerminal.UIA.Tests</RootNamespace>
     <AssemblyName>WindowsTerminal.UIA.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -20,6 +20,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <TerminalTAEF>true</TerminalTAEF>
@@ -99,6 +100,7 @@
     <Compile Include="Elements\TerminalApp.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="SmokeTests.cs" />
+    <Compile Include="ScreenRecording.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
