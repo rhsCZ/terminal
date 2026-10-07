@@ -1362,10 +1362,6 @@
     <value>Если этот параметр включен, Терминал автоматически добавляет метку, указывающую позицию конца команды при нажатии клавиши ВВОД.</value>
     <comment>A description for what the "Automatically mark prompts on pressing Enter" setting does. Presented near "Profile_AutoMarkPrompts".</comment>
   </data>
-  <data name="Profile_RepositionCursorWithMouse.Header" xml:space="preserve">
-    <value>Экспериментальная функция: изменение положения курсора щелчками мыши</value>
-    <comment>This allows the user to move the text cursor just by clicking with the mouse.</comment>
-  </data>
   <data name="Profile_RepositionCursorWithMouse.Description" xml:space="preserve">
     <value>Если этот параметр включен, при щелчке внутри запроса курсор перемещается в эту позицию. Для правильного выполнения этой операции необходимо включить интеграцию оболочки в вашей оболочке.</value>
     <comment>A description for what the "Reload environment variables" setting does. Presented near "Profile_RepositionCursorWithMouse".</comment>
@@ -2639,17 +2635,9 @@
     <value>Это полезно для устранения неполадок и разработки терминала.</value>
     <comment>Additional description for what the "debug features enabled" setting does. Presented near "Globals_DebugFeaturesEnabled.Header".</comment>
   </data>
-  <data name="Profile_RainbowSuggestions.Header" xml:space="preserve">
-    <value>Экспериментальная функция: показывать предлагаемые входные данные в цветах радуги</value>
-    <comment>This is a label for a setting that, when enabled, applies a rainbow coloring to the preview text from the suggestions UI.</comment>
-  </data>
   <data name="Globals_EnableColorSelection.Header" xml:space="preserve">
     <value>Добавить сочетания клавиш для выбора цветного текста</value>
     <comment>Header for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session.</comment>
-  </data>
-  <data name="Globals_EnableColorSelection.Description" xml:space="preserve">
-    <value>Экспериментальная функция. Выделять выбранный текст или текст, совпадающий с ним, с помощью пользовательских цветов и сочетаний клавиш</value>
-    <comment>Additional text for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session. Presented near "Globals_EnableColorSelection.Header".</comment>
   </data>
   <data name="Globals_EnableUnfocusedAcrylic.Content" xml:space="preserve">
     <value>Разрешить использование акрилового материала в несфокусированных окнах</value>

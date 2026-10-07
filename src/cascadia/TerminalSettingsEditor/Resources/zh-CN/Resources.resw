@@ -1362,10 +1362,6 @@
     <value>启用后，在你按 Enter 时，终端会自动添加一个标记，指示命令结束的位置。</value>
     <comment>A description for what the "Automatically mark prompts on pressing Enter" setting does. Presented near "Profile_AutoMarkPrompts".</comment>
   </data>
-  <data name="Profile_RepositionCursorWithMouse.Header" xml:space="preserve">
-    <value>实验性: 通过鼠标单击重新定位光标</value>
-    <comment>This allows the user to move the text cursor just by clicking with the mouse.</comment>
-  </data>
   <data name="Profile_RepositionCursorWithMouse.Description" xml:space="preserve">
     <value>启用后，在提示中单击会将光标移动到该位置。这需要在 shell 中启用 shell 集成才能按预期工作。</value>
     <comment>A description for what the "Reload environment variables" setting does. Presented near "Profile_RepositionCursorWithMouse".</comment>
@@ -2639,17 +2635,9 @@
     <value>对于故障排除或开发终端非常有用。</value>
     <comment>Additional description for what the "debug features enabled" setting does. Presented near "Globals_DebugFeaturesEnabled.Header".</comment>
   </data>
-  <data name="Profile_RainbowSuggestions.Header" xml:space="preserve">
-    <value>实验性: 以彩虹色显示建议的输入</value>
-    <comment>This is a label for a setting that, when enabled, applies a rainbow coloring to the preview text from the suggestions UI.</comment>
-  </data>
   <data name="Globals_EnableColorSelection.Header" xml:space="preserve">
     <value>为选择的彩色文本添加键绑定</value>
     <comment>Header for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session.</comment>
-  </data>
-  <data name="Globals_EnableColorSelection.Description" xml:space="preserve">
-    <value>实验性。使用键绑定以自定义颜色突出显示所选文本或匹配文本</value>
-    <comment>Additional text for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session. Presented near "Globals_EnableColorSelection.Header".</comment>
   </data>
   <data name="Globals_EnableUnfocusedAcrylic.Content" xml:space="preserve">
     <value>允许非聚焦窗口使用亚克力材料效果</value>

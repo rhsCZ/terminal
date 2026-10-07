@@ -1362,10 +1362,6 @@
     <value>Cuando se habilita, el terminal agrega automáticamente una marca que indica la posición del final del comando al presionar Entrar.</value>
     <comment>A description for what the "Automatically mark prompts on pressing Enter" setting does. Presented near "Profile_AutoMarkPrompts".</comment>
   </data>
-  <data name="Profile_RepositionCursorWithMouse.Header" xml:space="preserve">
-    <value>Experimental: cambiar la posición del cursor con clics del mouse</value>
-    <comment>This allows the user to move the text cursor just by clicking with the mouse.</comment>
-  </data>
   <data name="Profile_RepositionCursorWithMouse.Description" xml:space="preserve">
     <value>Cuando se habilita, al hacer clic dentro del aviso se moverá el cursor a esa posición. Esto requiere que la integración de shell esté habilitada en el shell para funcionar de la forma esperada.</value>
     <comment>A description for what the "Reload environment variables" setting does. Presented near "Profile_RepositionCursorWithMouse".</comment>
@@ -2639,17 +2635,9 @@
     <value>Útil para solucionar problemas o desarrollar terminales.</value>
     <comment>Additional description for what the "debug features enabled" setting does. Presented near "Globals_DebugFeaturesEnabled.Header".</comment>
   </data>
-  <data name="Profile_RainbowSuggestions.Header" xml:space="preserve">
-    <value>Experimental: Mostrar la entrada sugerida en colores de arco iris</value>
-    <comment>This is a label for a setting that, when enabled, applies a rainbow coloring to the preview text from the suggestions UI.</comment>
-  </data>
   <data name="Globals_EnableColorSelection.Header" xml:space="preserve">
     <value>Agregar enlaces de teclado para la selección de texto coloreado</value>
     <comment>Header for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session.</comment>
-  </data>
-  <data name="Globals_EnableColorSelection.Description" xml:space="preserve">
-    <value>Experimental. Resaltar el texto seleccionado o el texto coincidente con colores personalizados mediante enlaces de teclado</value>
-    <comment>Additional text for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session. Presented near "Globals_EnableColorSelection.Header".</comment>
   </data>
   <data name="Globals_EnableUnfocusedAcrylic.Content" xml:space="preserve">
     <value>Permitir material acrílico en ventanas sin foco</value>

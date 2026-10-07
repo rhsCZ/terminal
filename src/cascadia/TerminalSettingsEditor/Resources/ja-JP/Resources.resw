@@ -1362,10 +1362,6 @@
     <value>有効にすると、Enter キーを押したときに、コマンドの終了位置を示すマークがターミナルに自動的に追加されます。</value>
     <comment>A description for what the "Automatically mark prompts on pressing Enter" setting does. Presented near "Profile_AutoMarkPrompts".</comment>
   </data>
-  <data name="Profile_RepositionCursorWithMouse.Header" xml:space="preserve">
-    <value>試験段階: マウスのクリックでカーソルの位置を変更する</value>
-    <comment>This allows the user to move the text cursor just by clicking with the mouse.</comment>
-  </data>
   <data name="Profile_RepositionCursorWithMouse.Description" xml:space="preserve">
     <value>有効にすると、プロンプト内をクリック時にカーソルがその位置に移動します。これを行うには、シェルでシェル統合を有効にし、期待どおりに動作させる必要があります。</value>
     <comment>A description for what the "Reload environment variables" setting does. Presented near "Profile_RepositionCursorWithMouse".</comment>
@@ -2639,17 +2635,9 @@
     <value>ターミナルのトラブルシューティングや開発に役立ちます。</value>
     <comment>Additional description for what the "debug features enabled" setting does. Presented near "Globals_DebugFeaturesEnabled.Header".</comment>
   </data>
-  <data name="Profile_RainbowSuggestions.Header" xml:space="preserve">
-    <value>試験段階: 入力候補を虹色で表示する</value>
-    <comment>This is a label for a setting that, when enabled, applies a rainbow coloring to the preview text from the suggestions UI.</comment>
-  </data>
   <data name="Globals_EnableColorSelection.Header" xml:space="preserve">
     <value>色付きテキスト選択のキー バインドを追加する</value>
     <comment>Header for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session.</comment>
-  </data>
-  <data name="Globals_EnableColorSelection.Description" xml:space="preserve">
-    <value>試験的。キー バインドを使用して選択したテキストまたは一致するテキストをカスタム カラーで強調表示する</value>
-    <comment>Additional text for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session. Presented near "Globals_EnableColorSelection.Header".</comment>
   </data>
   <data name="Globals_EnableUnfocusedAcrylic.Content" xml:space="preserve">
     <value>フォーカスされていないウィンドウでアクリル素材を許可する</value>
