@@ -1362,10 +1362,6 @@
     <value>Wenn diese Option aktiviert ist, fügt das Terminal beim Drücken der EINGABETASTE automatisch eine Markierung ein, die das Ende des Befehls kennzeichnet.</value>
     <comment>A description for what the "Automatically mark prompts on pressing Enter" setting does. Presented near "Profile_AutoMarkPrompts".</comment>
   </data>
-  <data name="Profile_RepositionCursorWithMouse.Header" xml:space="preserve">
-    <value>Experimentell: Positionieren des Cursors mit Mausklicks</value>
-    <comment>This allows the user to move the text cursor just by clicking with the mouse.</comment>
-  </data>
   <data name="Profile_RepositionCursorWithMouse.Description" xml:space="preserve">
     <value>Wenn diese Option aktiviert ist, wird der Cursor durch Klicken innerhalb des Prompts an diese Position verschoben. Dies erfordert, dass die Shellintegration in Ihrer Shell aktiviert ist, damit sie erwartungsgemäß funktioniert.</value>
     <comment>A description for what the "Reload environment variables" setting does. Presented near "Profile_RepositionCursorWithMouse".</comment>
@@ -2639,17 +2635,9 @@
     <value>Nützlich für die Problembehandlung oder Entwicklung eines Terminals.</value>
     <comment>Additional description for what the "debug features enabled" setting does. Presented near "Globals_DebugFeaturesEnabled.Header".</comment>
   </data>
-  <data name="Profile_RainbowSuggestions.Header" xml:space="preserve">
-    <value>Experimentell: Eingabevorschläge in Regenbogenfarben anzeigen</value>
-    <comment>This is a label for a setting that, when enabled, applies a rainbow coloring to the preview text from the suggestions UI.</comment>
-  </data>
   <data name="Globals_EnableColorSelection.Header" xml:space="preserve">
     <value>Tastenkombinationen für farbige Textauswahl hinzufügen</value>
     <comment>Header for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session.</comment>
-  </data>
-  <data name="Globals_EnableColorSelection.Description" xml:space="preserve">
-    <value>Experimentell. Ausgewählten Text oder übereinstimmenden Text mit benutzerdefinierten Farben mithilfe von Tastenkombinationen hervorheben</value>
-    <comment>Additional text for a control to toggle adding a set of key bindings that can be used to apply coloring to selected text in a terminal session. Presented near "Globals_EnableColorSelection.Header".</comment>
   </data>
   <data name="Globals_EnableUnfocusedAcrylic.Content" xml:space="preserve">
     <value>Acrylmaterial in unfokussierten Fenstern zulassen</value>
